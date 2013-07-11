@@ -7,6 +7,7 @@ if ser.isOpen():
 else:
     print("Port nie otwarty")
     exit(1)
+sleep(1)
 ser.flushInput()
 while True:
     line = ser.readline()
