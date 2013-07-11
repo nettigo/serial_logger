@@ -5,15 +5,10 @@ ser = serial.Serial('/dev/ttyACM0',9600, timeout=1)
 if ser.isOpen():
     print("Otwarty")
 else:
-    exit(0)
+    print("Port nie otwarty")
+    exit(1)
 ser.flushInput()
 while True:
-    line = ''
-    while ser.inWaiting() > 0:
-        ret = ser.read(1)
-        line += ret
-        sleep(0.01)
-        if ret == '\n':
-            break
+    line = ser.readline()
     if line != '':
         print(strftime("'%d %b %Y %H:%M:%S',", gmtime())+line, end='')
