@@ -1,5 +1,7 @@
+#/usr/bin/env python2
+
 from __future__ import print_function
-from time import gmtime, strftime, sleep
+from time import localtime, strftime, sleep
 import serial
 import os
 from serial.tools import list_ports
@@ -47,4 +49,4 @@ ser.flushInput()
 while True:
     line = ser.readline()
     if line != '':
-        print(strftime("'%d %b %Y %H:%M:%S',", gmtime())+line, end='')
+        print(strftime("'%d %b %Y %H:%M:%S',", localtime())+line, end='')
