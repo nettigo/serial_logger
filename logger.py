@@ -1,11 +1,11 @@
 from __future__ import print_function
-from time import gmtime, strftime, sleep
+from time import gmtime, sleep
+from datetime import datetime
 import serial
 import os
 from serial.tools import list_ports
 import argparse
 
-import argparse
 
 def list_serial_ports():
     # Windows
@@ -48,4 +48,5 @@ ser.flushInput()
 while True:
     line = ser.readline()
     if line != '':
-        print(strftime("'%d %b %Y %H:%M:%S',", gmtime())+line, end='')
+        print(datetime.now().strftime("'%d %b %Y %H:%M:%S.%f',")+line, end='')
+#        strftime("'%d %b %Y %H:%M:%S.%f',", gmtime())+line, end='')
