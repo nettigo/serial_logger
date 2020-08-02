@@ -1,13 +1,13 @@
 #/usr/bin/env python2
 
 from __future__ import print_function
-from time import localtime, strftime, sleep
+from time import gmtime, sleep
+from datetime import datetime
 import serial
 import os
 from serial.tools import list_ports
 import argparse
 
-import argparse
 
 def list_serial_ports():
     # Windows
@@ -30,15 +30,16 @@ def print_serial_ports():
     print('\n'.join(ret))
 parser = argparse.ArgumentParser()
 parser.add_argument("-l", "--list", help='List serial ports and stop', action='store_true')
-parser.add_argument("-p", "--port", help='Serial port used to listen to', default='/dev/ttyACM0')
+parser.add_argument("-p", "--port", help='Serial port used to listen to (defaults to ttyACM0)', default='/dev/ttyACM0')
+parser.add_argument("-b", "--baudrate", help='Specify baudrate (defaults to 9600)', default=9600)
 args = parser.parse_args()
 if args.list:
     print_serial_ports();
     exit(0);
 
 port=args.port
-    
-ser = serial.Serial(port,9600, timeout=1)
+speed = args.baudrate    
+ser = serial.Serial(port,speed, timeout=1)
 if ser.isOpen():
     print("Otwarty")
 else:
@@ -49,4 +50,5 @@ ser.flushInput()
 while True:
     line = ser.readline()
     if line != '':
-        print(strftime("'%d %b %Y %H:%M:%S',", localtime())+line, end='')
+        print(datetime.now().strftime("'%d %b %Y %H:%M:%S.%f',")+line, end='')
+#        strftime("'%d %b %Y %H:%M:%S.%f',", gmtime())+line, end='')
