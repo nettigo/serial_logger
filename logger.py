@@ -1,4 +1,3 @@
-#/usr/bin/env python2
 
 from __future__ import print_function
 from time import gmtime, sleep
@@ -39,7 +38,7 @@ if args.list:
 
 port=args.port
 speed = args.baudrate    
-ser = serial.Serial(port,speed, timeout=1)
+ser = serial.Serial(port, speed, timeout=1)
 if ser.isOpen():
     print("Otwarty")
 else:
@@ -50,5 +49,5 @@ ser.flushInput()
 while True:
     line = ser.readline()
     if line != '':
-        print(datetime.now().strftime("'%d %b %Y %H:%M:%S.%f',")+line, end='')
+        print(datetime.now().strftime("'%d %b %Y %H:%M:%S.%f',")+line.decode('ascii', errors='ignore'), end='')
 #        strftime("'%d %b %Y %H:%M:%S.%f',", gmtime())+line, end='')
